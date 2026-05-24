@@ -54,7 +54,7 @@ button { cursor: pointer; }
 }
 
 .screen-home {
-  padding: 36px 32px 40px;
+  padding: 40px 32px 60px;
   display: flex;
   flex-direction: column;
 }
@@ -62,54 +62,137 @@ button { cursor: pointer; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 48px;
+  margin-bottom: 60px;
 }
 .home-greeting {
-  font-size: 13px;
+  font-size: 11px;
   color: var(--muted);
-  letter-spacing: 2px;
-  font-weight: 400;
+  letter-spacing: 4px;
+  font-weight: 300;
+  text-transform: uppercase;
 }
 .home-sub {
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: -0.5px;
-  margin-top: 4px;
+  font-size: 20px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  margin-top: 6px;
   color: var(--text);
 }
 .theme-toggle {
-  width: 38px; height: 38px; border-radius: 50%;
+  width: 40px; height: 40px; border-radius: 50%;
   border: 1px solid var(--line);
   display: flex; align-items: center; justify-content: center;
   color: var(--text);
+  transition: all 0.3s ease;
 }
-.theme-toggle:hover { background: var(--surface); }
-.theme-toggle:active { transform: scale(0.92); }
+.theme-toggle:hover { background: var(--text); color: var(--invert); }
+.theme-toggle:active { transform: scale(0.95); }
 
 .home-brand {
   text-align: center;
-  padding: 24px 0 40px;
+  padding: 40px 0 80px;
   color: var(--text);
-  animation: brandIn .8s .15s cubic-bezier(.2,.7,.2,1) both;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: brandIn 1s 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
-.home-brand svg { display: block; margin: 0 auto 16px; opacity: .9; }
+.brand-art {
+  margin-bottom: 32px;
+  animation: spin 60s linear infinite;
+}
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
 .home-brand-name {
-  font-size: 13px;
-  letter-spacing: 6px;
-  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 10px;
+  font-weight: 400;
+  text-transform: uppercase;
 }
 .home-brand-tag {
-  font-size: 11px;
+  font-size: 10px;
   color: var(--muted);
-  letter-spacing: 2px;
-  margin-top: 6px;
-  font-style: italic;
+  letter-spacing: 4px;
+  margin-top: 12px;
+  font-weight: 300;
 }
 @keyframes brandIn {
-  from { opacity: 0; transform: translateY(12px); }
+  from { opacity: 0; transform: translateY(20px); filter: blur(4px); }
+  to { opacity: 1; transform: none; filter: blur(0); }
+}
+
+.app-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  padding: 0 0 40px;
+}
+@media (min-width: 600px) {
+  .app-grid { grid-template-columns: repeat(4, 1fr); }
+}
+.app-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid var(--line);
+  padding: 36px 20px;
+  text-align: center;
+  color: var(--text);
+  animation: tileIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(0.4s + var(--d) * 0.1s);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.app-tile:hover {
+  background: var(--text);
+  color: var(--invert);
+  border-color: var(--text);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+.app-tile:active { transform: translateY(0) scale(0.98); }
+@keyframes tileIn {
+  from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: none; }
 }
 
+.app-icon {
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 16px;
+  transition: transform 0.4s ease;
+}
+.app-tile:hover .app-icon { transform: scale(1.1); }
+.app-name {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 2px;
+}
+.app-tag {
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  transition: color 0.4s ease;
+}
+.app-tile:hover .app-tag { color: var(--invert); opacity: 0.6; }
+
+.home-foot {
+  margin-top: auto;
+  padding-top: 40px;
+  display: flex; align-items: center; gap: 20px;
+  animation: brandIn 1s 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.home-foot-line { flex: 1; height: 1px; background: var(--line); }
+.home-foot-text {
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-weight: 300;
+}
 .app-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

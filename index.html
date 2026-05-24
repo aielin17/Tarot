@@ -13,33 +13,39 @@
 
   <div class="screens">
 
-    <section id="screen-home" class="screen screen-home is-active">
+<section id="screen-home" class="screen screen-home is-active">
       <header class="home-top">
         <div class="home-hello">
           <div class="home-greeting" id="home-greeting">欢迎光临</div>
-          <div class="home-sub">亲爱的女巫</div>
+          <div class="home-sub">今日宜静心</div>
         </div>
         <button class="theme-toggle" id="theme-toggle" aria-label="切换主题">
-          <svg class="ico-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-          <svg class="ico-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg class="ico-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 3v1M12 20v1M5 5l.7.7M18.3 18.3l.7.7M3 12h1M20 12h1M5 19l.7-.7M18.3 5.7l.7-.7"/></svg>
+          <svg class="ico-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
       </header>
 
       <div class="home-brand">
-        <svg viewBox="0 0 80 80" width="56" height="56" fill="none" stroke="currentColor" stroke-width="1.2">
-          <circle cx="40" cy="40" r="32"/>
-          <path d="M40 14 L46 34 L66 34 L50 46 L56 66 L40 54 L24 66 L30 46 L14 34 L34 34 Z"/>
-        </svg>
-        <div class="home-brand-name">TAROT&nbsp;·&nbsp;MILK</div>
-        <div class="home-brand-tag">a quiet deck of seventy-nine</div>
+        <div class="brand-art">
+          <!-- 极简几何星轨图，带缓慢旋转动画 -->
+          <svg viewBox="0 0 120 120" width="80" height="80" fill="none" stroke="currentColor" stroke-width="0.5">
+            <circle cx="60" cy="60" r="58" stroke-dasharray="2 4"/>
+            <circle cx="60" cy="60" r="42"/>
+            <path d="M60 2 L60 118 M2 60 L118 60"/>
+            <path d="M19 19 L101 101 M19 101 L101 19" stroke-opacity="0.3"/>
+            <circle cx="60" cy="18" r="3" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="home-brand-name">TAROT · MILK</div>
+        <div class="home-brand-tag">SILENCE & THE LONG NIGHT</div>
       </div>
 
       <nav class="app-grid">
         <button class="app-tile" data-app="cards" style="--d:0">
           <span class="app-icon">
-            <svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="9" y="5" width="14" height="22" rx="2"/>
-              <path d="M13 11h6M13 16h6M13 21h4"/>
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="2" width="16" height="20" rx="1"/>
+              <path d="M4 7h16M8 12h8M8 16h6"/>
             </svg>
           </span>
           <span class="app-name">牌库</span>
@@ -47,9 +53,8 @@
         </button>
         <button class="app-tile" data-app="exam" style="--d:1">
           <span class="app-icon">
-            <svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="6" y="5" width="20" height="22" rx="2"/>
-              <path d="M11 13l3 3 6-6M11 21h10"/>
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
             </svg>
           </span>
           <span class="app-name">练习</span>
@@ -57,10 +62,10 @@
         </button>
         <button class="app-tile" data-app="reading" style="--d:2">
           <span class="app-icon">
-            <svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="16" cy="16" r="11"/>
-              <path d="M16 8v8l5 3"/>
-              <circle cx="16" cy="16" r="1.2" fill="currentColor"/>
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 2v20M2 12h20"/>
+              <circle cx="12" cy="12" r="4"/>
             </svg>
           </span>
           <span class="app-name">占卜</span>
@@ -68,9 +73,8 @@
         </button>
         <button class="app-tile" data-app="notes" style="--d:3">
           <span class="app-icon">
-            <svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M19 4H8a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V11z"/>
-              <path d="M19 4v7h7M11 17h10M11 21h7"/>
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
             </svg>
           </span>
           <span class="app-name">笔记</span>
@@ -80,11 +84,10 @@
 
       <footer class="home-foot">
         <span class="home-foot-line"></span>
-        <span class="home-foot-text">silence · cards · the long night</span>
+        <span class="home-foot-text">quiet & untouched</span>
         <span class="home-foot-line"></span>
       </footer>
     </section>
-
     <section id="screen-cards" class="screen screen-app"></section>
     <section id="screen-exam" class="screen screen-app"></section>
     <section id="screen-reading" class="screen screen-app"></section>

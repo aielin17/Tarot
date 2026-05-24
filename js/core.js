@@ -28,16 +28,16 @@ const Core = (function() {
     save();
   }
 
-  function goto(appName) {
+function goto(appName) {
     state.currentApp = appName;
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('is-active'));
     const target = document.getElementById('screen-' + appName);
     if (target) target.classList.add('is-active');
 
-    if (appName === 'cards' && window.AppCards) AppCards.render();
-    if (appName === 'exam' && window.AppExam) AppExam.render();
-    if (appName === 'reading' && window.AppReading) AppReading.render();
-    if (appName === 'notes' && window.AppNotes) AppNotes.render();
+    if (appName === 'cards' && typeof AppCards !== 'undefined') AppCards.render();
+    if (appName === 'exam' && typeof AppExam !== 'undefined') AppExam.render();
+    if (appName === 'reading' && typeof AppReading !== 'undefined') AppReading.render();
+    if (appName === 'notes' && typeof AppNotes !== 'undefined') AppNotes.render();
   }
   function goHome() { goto('home'); }
 
@@ -86,7 +86,7 @@ const Core = (function() {
     if (el) el.innerText = g;
   }
 
-    function init() {
+  function init() {
     load();
     applyTheme();
     updateGreeting();
@@ -102,12 +102,11 @@ const Core = (function() {
       }
     });
 
-    if (window.AppCards) AppCards.init();
-    if (window.AppExam) AppExam.init();
-    if (window.AppReading) AppReading.init();
-    if (window.AppNotes) AppNotes.init();
+    if (typeof AppCards !== 'undefined') AppCards.init();
+    if (typeof AppExam !== 'undefined') AppExam.init();
+    if (typeof AppReading !== 'undefined') AppReading.init();
+    if (typeof AppNotes !== 'undefined') AppNotes.init();
   }
-
   return {
     init, goto, goHome, save, state, Util
   };

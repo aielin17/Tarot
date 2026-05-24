@@ -86,18 +86,21 @@ const Core = (function() {
     if (el) el.innerText = g;
   }
 
-  function init() {
+    function init() {
     load();
     applyTheme();
-    tickClock();
     updateGreeting();
-    setInterval(tickClock, 30000);
 
-    document.querySelectorAll('.app-tile').forEach(t => {
-      t.addEventListener('click', () => goto(t.dataset.app));
+    document.addEventListener('click', e => {
+      const tile = e.target.closest('[data-app]');
+      if (tile) {
+        goto(tile.dataset.app);
+        return;
+      }
+      if (e.target.closest('#theme-toggle')) {
+        toggleTheme();
+      }
     });
-
-    document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
 
     if (window.AppCards) AppCards.init();
     if (window.AppExam) AppExam.init();

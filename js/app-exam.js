@@ -199,13 +199,13 @@ const AppExam = (function() {
               <div class="mode-desc">复合线索 / 情境</div>
             </span>
           </button>
-          <button class="mode-card invert" data-mode="master">
-            <span class="mode-icon icon-notes" style="background:rgba(255,255,255,0.18);"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
-            <span style="flex:1;">
-              <div class="mode-name">大师</div>
-              <div class="mode-desc">意象 / 情境为主</div>
-            </span>
-          </button>
+          <button class="mode-card" data-mode="master">
+  <span class="mode-icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 2l2.5 7H22l-6 4.5L18.5 21 12 16.5 5.5 21 8 13.5 2 9h7.5z"/></svg></span>
+  <span style="flex:1;">
+    <div class="mode-name">大师</div>
+    <div class="mode-desc">意象 / 情境为主</div>
+  </span>
+</button>
         </div>
       </div>
     `;

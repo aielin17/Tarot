@@ -6,7 +6,8 @@ const AppReading = (function() {
     deck: 'tarot',
     spread: 3,
     reversed: true,
-    drawn: []
+    drawn: [],
+    freeDeck: []
   };
 
   const SPREAD_POS = {
@@ -40,49 +41,78 @@ const AppReading = (function() {
             <button class="${local.spread===3?'on':''}" data-v="3">三张</button>
             <button class="${local.spread===4?'on':''}" data-v="4">四张</button>
             <button class="${local.spread===5?'on':''}" data-v="5">五张</button>
+            <button class="${local.spread==='free'?'on':''}" data-v="free">不限</button>
           </div>
         </div>
-        <div class="toggle-row">
-          <div class="toggle ${local.reversed?'on':''}" id="rd-rev-toggle"></div>
+
+        <div class="check-row" id="rd-rev-check">
+          <span class="check-box ${local.reversed?'on':''}">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          </span>
           <span>包含逆位</span>
         </div>
-        <button class="btn btn-block" onclick="AppReading.draw()" style="margin-bottom:18px;">
-          ${U.icon('refresh', 16)} 抽牌
+
+        <button class="btn btn-block" id="rd-draw-btn" style="margin-bottom:18px;">
+          ${U.icon('refresh', 16)} <span id="rd-btn-label">${local.spread==='free' ? '抽一张' : '抽牌'}</span>
         </button>
         <div class="spread-area ${local.drawn.length?'':'empty'}" id="rd-area">
-          ${local.drawn.length ? '' : '<span>选好牌阵后点击「抽牌」</span>'}
+          ${local.drawn.length ? '' : '<span>选好牌阵后点击抽牌</span>'}
         </div>
         <div class="interp-list" id="rd-interp"></div>
       </div>
     `;
 
     screen.querySelectorAll('#rd-deck-seg button').forEach(b => {
-      b.onclick = () => { local.deck = b.dataset.v; render(); };
+      b.onclick = () => { local.deck = b.dataset.v; local.drawn = []; local.freeDeck = []; render(); };
     });
     screen.querySelectorAll('#rd-spread-seg button').forEach(b => {
-      b.onclick = () => { local.spread = parseInt(b.dataset.v); render(); };
+      b.onclick = () => {
+        const v = b.dataset.v;
+        local.spread = v === 'free' ? 'free' : parseInt(v);
+        local.drawn = [];
+        local.freeDeck = [];
+        render();
+      };
     });
-    document.getElementById('rd-rev-toggle').onclick = () => {
+    document.getElementById('rd-rev-check').onclick = () => {
       local.reversed = !local.reversed;
       render();
     };
+    document.getElementById('rd-draw-btn').onclick = draw;
 
     if (local.drawn.length) renderDrawn();
   }
 
   function draw() {
     const deck = local.deck === 'tarot' ? TAROT_CARDS : LEN_CARDS;
-    local.drawn = U.sample(deck, local.spread).map(c => ({
-      card: c,
-      reversed: local.reversed && Math.random() < 0.3,
-      revealed: false
-    }));
+    if (local.spread === 'free') {
+      if (!local.freeDeck.length && !local.drawn.length) {
+        local.freeDeck = U.shuffle(deck);
+      }
+      if (!local.freeDeck.length) {
+        local.freeDeck = U.shuffle(deck);
+      }
+      const c = local.freeDeck.shift();
+      local.drawn.push({
+        card: c,
+        reversed: local.reversed && Math.random() < 0.3,
+        revealed: true
+      });
+    } else {
+      local.drawn = U.sample(deck, local.spread).map(c => ({
+        card: c,
+        reversed: local.reversed && Math.random() < 0.3,
+        revealed: false
+      }));
+    }
     render();
   }
 
   function renderDrawn() {
     const area = document.getElementById('rd-area');
-    const positions = SPREAD_POS[local.spread] || local.drawn.map((_, i) => `第${i+1}张`);
+    const positions = local.spread === 'free'
+      ? local.drawn.map((_, i) => `第 ${i+1} 张`)
+      : (SPREAD_POS[local.spread] || local.drawn.map((_, i) => `第${i+1}张`));
     area.classList.remove('empty');
     area.innerHTML = local.drawn.map((d, i) => {
       if (!d.revealed) {
@@ -109,8 +139,10 @@ const AppReading = (function() {
 
   function renderInterp() {
     const list = document.getElementById('rd-interp');
-    const positions = SPREAD_POS[local.spread] || local.drawn.map((_, i) => `第${i+1}张`);
-    list.innerHTML = local.drawn.filter(d => d.revealed).map((d, i) => {
+    const positions = local.spread === 'free'
+      ? local.drawn.map((_, i) => `第 ${i+1} 张`)
+      : (SPREAD_POS[local.spread] || local.drawn.map((_, i) => `第${i+1}张`));
+    list.innerHTML = local.drawn.filter(d => d.revealed).map((d) => {
       const realIdx = local.drawn.indexOf(d);
       return `
         <div class="interp-item">

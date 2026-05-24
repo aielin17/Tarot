@@ -621,20 +621,23 @@ textarea.field { resize: vertical; min-height: 120px; line-height: 1.7; }
 .interp-section .label { font-size: 9.5px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 4px; }
 .interp-section .content { font-size: 12px; line-height: 1.65; }
 
-.toggle-row { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; font-size: 13px; color: var(--text-2); }
-.toggle {
-  position: relative; width: 38px; height: 22px;
-  border-radius: 11px; background: var(--line); transition: background .2s;
-  flex-shrink: 0;
+.check-row {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-bottom: 16px; font-size: 13px; color: var(--text-2);
+  cursor: pointer; padding: 4px 0;
 }
-.toggle.on { background: var(--text); }
-.toggle::after {
-  content: ''; position: absolute; top: 2px; left: 2px;
-  width: 18px; height: 18px; border-radius: 50%; background: var(--bg);
-  transition: transform .2s;
+.check-row .check-box {
+  width: 18px; height: 18px;
+  border: 1px solid var(--line-2);
+  display: inline-flex; align-items: center; justify-content: center;
+  color: transparent;
+  transition: all 0.25s ease;
 }
-.toggle.on::after { transform: translateX(16px); }
-
+.check-row .check-box.on {
+  background: var(--hint-violet);
+  border-color: var(--hint-violet);
+  color: var(--invert);
+}
 .note-editor {
   background: var(--surface); border: 1px solid var(--line);
   border-radius: 2px; padding: 18px; margin-bottom: 18px;
@@ -657,3 +660,18 @@ textarea.field { resize: vertical; min-height: 120px; line-height: 1.7; }
 .note-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; padding-right: 60px; }
 .note-content { font-size: 13px; line-height: 1.7; color: var(--text-2); white-space: pre-wrap; }
 .note-tools { position: absolute; top: 16px; right: 16px; display: flex; gap: 2px; }
+.home-brand .brand-art { color: var(--hint-violet); }
+.home-brand-name { color: var(--text); }
+.home-brand-tag { color: var(--hint-blue); }
+
+.app-tile:hover .app-icon { color: var(--invert); }
+
+.seg button.on { background: var(--text); color: var(--invert); }
+.q-kind { color: var(--hint-violet); border-color: var(--hint-violet); }
+.note-type { background: var(--hint-violet); color: var(--invert); }
+.rev-mark { background: var(--hint-blue); color: var(--invert); }
+.feedback.ok { border-left-color: var(--hint-blue); }
+.feedback.no { border-left-color: var(--hint-violet); }
+.progress-fill { background: linear-gradient(90deg, var(--hint-blue), var(--hint-violet)); }
+.draw-slot.revealed { border-color: var(--hint-violet); }
+.life-dot { background: var(--hint-violet); }

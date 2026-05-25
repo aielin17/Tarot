@@ -690,10 +690,10 @@ textarea.field { resize: vertical; min-height: 120px; line-height: 1.7; }
   border-color: var(--hint-blue) !important;
   box-shadow: 0 0 8px rgba(184, 208, 232, 0.4);
 }
-.card-modal-body p, .section-cell p {
-  white-space: pre-wrap;
-}
-.pv, .imagery-box, .section-cell p {
+.card-modal-head .kw,
+.pair-cell .pv,
+.section-cell p,
+.imagery-box {
   white-space: pre-wrap;
 }
 .home-brand-name[contenteditable="true"],

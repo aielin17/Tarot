@@ -693,3 +693,24 @@ textarea.field { resize: vertical; min-height: 120px; line-height: 1.7; }
 .card-modal-body p, .section-cell p {
   white-space: pre-wrap;
 }
+.pv, .imagery-box, .section-cell p {
+  white-space: pre-wrap;
+}
+.home-brand-name[contenteditable="true"],
+.home-brand-tag[contenteditable="true"] {
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.home-brand-name[contenteditable="true"]:hover,
+.home-brand-tag[contenteditable="true"]:hover {
+  outline: 1px dashed var(--line);
+  cursor: text;
+}
+
+.home-brand-name[contenteditable="true"]:focus,
+.home-brand-tag[contenteditable="true"]:focus {
+  outline: 1px solid var(--hint-blue);
+  background: var(--surface);
+}

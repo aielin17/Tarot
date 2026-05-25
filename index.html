@@ -38,8 +38,8 @@
             <circle cx="60" cy="18" r="3" fill="currentColor"/>
           </svg>
         </div>
-        <div class="home-brand-name">- ̗̀ ෆ( ˶'ᵕ'˶)ෆ ̖́- </div>
-        <div class="home-brand-tag">The entire cosmos,right in my palm</div>
+        <div class="home-brand-name" id="home-brand-name" contenteditable="true" title="点击即可直接修改文字">⌯>ᴗ<⌯</div>
+<div class="home-brand-tag" id="home-brand-tag" contenteditable="true" title="点击即可直接修改文字">The entire cosmos,right in my palm</div>
       </div>
 
       <nav class="app-grid">
@@ -99,7 +99,46 @@
 <script src="js/app-exam.js"></script>
 <script src="js/app-reading.js"></script>
 <script src="js/app-notes.js"></script>
-<script>Core.init();</script>
+<script>
+  Core.init();
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const nameEl = document.getElementById('home-brand-name');
+    const tagEl = document.getElementById('home-brand-tag');
+
+    if (!nameEl || !tagEl) return;
+
+    const defaultName = "⌯>ᴗ<⌯";
+    const defaultTag = "The entire cosmos,right in my palm";
+
+    const savedName = localStorage.getItem('custom_brand_name');
+    const savedTag = localStorage.getItem('custom_brand_tag');
+
+    if (savedName) nameEl.innerText = savedName;
+    if (savedTag) tagEl.innerText = savedTag;
+
+    nameEl.addEventListener('blur', () => {
+      const val = nameEl.innerText.trim();
+      localStorage.setItem('custom_brand_name', val || defaultName);
+      if (!val) nameEl.innerText = defaultName;
+    });
+
+    tagEl.addEventListener('blur', () => {
+      const val = tagEl.innerText.trim();
+      localStorage.setItem('custom_brand_tag', val || defaultTag);
+      if (!val) tagEl.innerText = defaultTag;
+    });
+
+    const disableEnter = (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        e.target.blur();
+      }
+    };
+    nameEl.addEventListener('keydown', disableEnter);
+    tagEl.addEventListener('keydown', disableEnter);
+  });
+</script>
 
 </body>
 </html>

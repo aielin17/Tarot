@@ -22,11 +22,11 @@ const AppExam = (function() {
   const MODES = {
     beginner: {
       label: '入门', opts: 4, time: 0, showAnswer: true, penalty: 0, lives: 0,
-      types: ['nameToCore', 'coreToName', 'uprightToCard']
+      types: ['nameToCore', 'coreToName', 'uprightToCard', 'booleanQ']
     },
     intermediate: {
       label: '进阶', opts: 5, time: 30, showAnswer: true, penalty: 0, lives: 0,
-      types: ['nameToCore', 'coreToName', 'uprightToCard', 'reversedToCard', 'multiKeyword', 'fillBlank']
+      types: ['nameToCore', 'coreToName', 'uprightToCard', 'reversedToCard', 'multiKeyword', 'fillBlank', 'booleanQ']
     },
     advanced: {
       label: '高阶', opts: 5, time: 18, showAnswer: true, penalty: 5, lives: 0,
@@ -96,6 +96,26 @@ const AppExam = (function() {
         type: 'single', kind: '情境', text: `这段解读对应哪张牌？`,
         clues: [['情境', scene]],
         correct: card.name, opts: U.shuffle([...distractors, card.name])
+      };
+    },
+    booleanQ(card, pool, n) {
+      const isTrue = Math.random() < 0.5;
+      let text = '';
+      let correct = '';
+      if (isTrue) {
+        text = `「${card.name}」的核心含义是「${card.core.split('❖')[0].split('。')[0]}」，这个说法是否正确？`;
+        correct = '正确';
+      } else {
+        const wrongCard = U.pick(pool.filter(c => c.name !== card.name));
+        text = `「${card.name}」的核心含义是「${wrongCard.core.split('❖')[0].split('。')[0]}」，这个说法是否正确？`;
+        correct = '错误';
+      }
+      return {
+        type: 'single',
+        kind: '判断',
+        text,
+        correct,
+        opts: ['正确', '错误']
       };
     },
     multiKeyword(card, pool, n) {

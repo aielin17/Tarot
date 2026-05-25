@@ -57,6 +57,8 @@ const AppCards = (function() {
     screen.querySelectorAll('#cd-suit-seg button').forEach(b => {
       b.onclick = () => {
         local.suitFilter = b.dataset.suit;
+        screen.querySelectorAll('#cd-suit-seg button').forEach(btn => btn.classList.remove('on'));
+        b.classList.add('on');
         renderList();
       };
     });
@@ -140,7 +142,7 @@ const AppCards = (function() {
             <div class="section-cell"><h4>警示</h4><p>${U.escape(c.warn)}</p></div>
           </div>
           <div class="section-cell" style="margin-bottom:14px;">
-            <h4>梦占</h4>
+            <h4>建议</h4>
             <p>${U.escape(c.advice)}</p>
           </div>
           <div class="imagery-box">${U.escape(c.imagery)}</div>

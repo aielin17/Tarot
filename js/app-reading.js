@@ -7,7 +7,8 @@ const AppReading = (function() {
     spread: 3,
     reversed: true,
     drawn: [],
-    freeDeck: []
+    freeDeck: [],
+    activeIdx: 0
   };
 
   const SPREAD_POS = {
@@ -84,6 +85,7 @@ const AppReading = (function() {
   }
 
   function draw() {
+    local.activeIdx = 0;
     const deck = local.deck === 'tarot' ? TAROT_CARDS : LEN_CARDS;
     if (local.spread === 'free') {
       if (!local.freeDeck.length && !local.drawn.length) {
@@ -118,50 +120,64 @@ const AppReading = (function() {
       if (!d.revealed) {
         return `<div class="draw-slot" data-i="${i}"></div>`;
       }
+      const isActive = i === local.activeIdx ? 'active' : '';
       return `
-        <div class="draw-slot revealed ${d.reversed?'reversed':''}">
+        <div class="draw-slot revealed ${d.reversed?'reversed':''} ${isActive}" data-i="${i}">
           <div class="d-num">${U.escape(d.card.num)}${d.reversed?' · R':''}</div>
           <div class="d-name">${U.escape(d.card.name)}</div>
           <div class="d-pos">${U.escape(positions[i])}</div>
         </div>
       `;
     }).join('');
+  
     area.querySelectorAll('.draw-slot[data-i]').forEach(el => {
-      el.onclick = () => reveal(parseInt(el.dataset.i));
+      el.onclick = () => {
+        const i = parseInt(el.dataset.i);
+        if (!local.drawn[i].revealed) {
+          reveal(i);
+        } else {
+          local.activeIdx = i;
+          renderDrawn();
+        }
+      };
     });
     renderInterp();
   }
 
   function reveal(i) {
     local.drawn[i].revealed = true;
-    renderDrawn();
+    local.activeIdx = i;
+    render(); 
   }
 
   function renderInterp() {
     const list = document.getElementById('rd-interp');
+    const d = local.drawn[local.activeIdx];
+    if (!d || !d.revealed) {
+      list.innerHTML = '';
+      return;
+    }
     const positions = local.spread === 'free'
       ? local.drawn.map((_, i) => `第 ${i+1} 张`)
       : (SPREAD_POS[local.spread] || local.drawn.map((_, i) => `第${i+1}张`));
-    list.innerHTML = local.drawn.filter(d => d.revealed).map((d) => {
-      const realIdx = local.drawn.indexOf(d);
-      return `
-        <div class="interp-item">
-          <div class="interp-h">
-            <span class="pos">${U.escape(positions[realIdx])}</span>
-            <h3>${U.escape(d.card.name)}</h3>
-            ${d.reversed?'<span class="rev-mark">逆位</span>':''}
-          </div>
-          <div class="interp-body">
-            <div class="interp-section"><div class="label">${d.reversed?'逆位':'正位'}</div><div class="content">${U.escape(d.reversed?d.card.rev:d.card.up)}</div></div>
-            <div class="interp-section"><div class="label">核心</div><div class="content">${U.escape(d.card.core)}</div></div>
-            <div class="interp-section"><div class="label">情感</div><div class="content">${U.escape(d.card.love)}</div></div>
-            <div class="interp-section"><div class="label">事业</div><div class="content">${U.escape(d.card.career)}</div></div>
-            <div class="interp-section"><div class="label">建议</div><div class="content">${U.escape(d.card.advice)}</div></div>
-            <div class="interp-section"><div class="label">警示</div><div class="content">${U.escape(d.card.warn)}</div></div>
-          </div>
+  
+    list.innerHTML = `
+      <div class="interp-item" style="animation: stageIn .3s ease both;">
+        <div class="interp-h">
+          <span class="pos">${U.escape(positions[local.activeIdx])}</span>
+          <h3>${U.escape(d.card.name)}</h3>
+          ${d.reversed?'<span class="rev-mark">逆位</span>':''}
         </div>
-      `;
-    }).join('');
+        <div class="interp-body">
+          <div class="interp-section"><div class="label">${d.reversed?'逆位':'正位'}</div><div class="content">${U.escape(d.reversed?d.card.rev:d.card.up)}</div></div>
+          <div class="interp-section"><div class="label">核心</div><div class="content">${U.escape(d.card.core)}</div></div>
+          <div class="interp-section"><div class="label">情感</div><div class="content">${U.escape(d.card.love)}</div></div>
+          <div class="interp-section"><div class="label">事业</div><div class="content">${U.escape(d.card.career)}</div></div>
+          <div class="interp-section"><div class="label">建议</div><div class="content">${U.escape(d.card.advice)}</div></div>
+          <div class="interp-section"><div class="label">警示</div><div class="content">${U.escape(d.card.warn)}</div></div>
+        </div>
+      </div>
+    `;
   }
 
   return { init, render, draw, reveal };

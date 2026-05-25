@@ -1,7 +1,7 @@
 const AppNotes = (function() {
 
   const U = Core.Util;
-  const local = { editId: null };
+  const local = { editId: null, expanded: new Set() };
 
   function init() {}
 
@@ -43,20 +43,42 @@ const AppNotes = (function() {
       list.innerHTML = `<div class="empty-state">还没有任何记录</div>`;
       return;
     }
-    list.innerHTML = Core.state.notes.map(n => `
-      <div class="note-item">
-        <div class="note-tools">
-          <button class="btn-icon" onclick="AppNotes.edit(${n.id})">${U.icon('edit', 14)}</button>
-          <button class="btn-icon" onclick="AppNotes.del(${n.id})">${U.icon('trash', 14)}</button>
+    list.innerHTML = Core.state.notes.map(n => {
+      const isLong = n.content.length > 100; 
+      const isExpanded = local.expanded.has(n.id);
+      const displayContent = isLong && !isExpanded
+        ? U.escape(n.content.slice(0, 100)) + '...'
+        : U.escape(n.content);
+  
+      return `
+        <div class="note-item">
+          <div class="note-tools">
+            <button class="btn-icon" onclick="AppNotes.edit(${n.id})">${U.icon('edit', 14)}</button>
+            <button class="btn-icon" onclick="AppNotes.del(${n.id})">${U.icon('trash', 14)}</button>
+          </div>
+          <div class="note-meta">
+            <span class="note-type">${U.escape(n.type)}</span>
+            <span class="note-date">${U.escape(n.date)}</span>
+          </div>
+          <div class="note-title">${U.escape(n.title)}</div>
+          <div class="note-content">${displayContent}</div>
+          ${isLong ? `
+            <button class="btn-text-toggle" onclick="AppNotes.toggleExpand(${n.id})">
+              ${isExpanded ? '收' : '展'}
+            </button>
+          ` : ''}
         </div>
-        <div class="note-meta">
-          <span class="note-type">${U.escape(n.type)}</span>
-          <span class="note-date">${U.escape(n.date)}</span>
-        </div>
-        <div class="note-title">${U.escape(n.title)}</div>
-        <div class="note-content">${U.escape(n.content)}</div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
+  }
+
+  function toggleExpand(id) {
+    if (local.expanded.has(id)) {
+      local.expanded.delete(id);
+    } else {
+      local.expanded.add(id);
+    }
+    renderList();
   }
 
   function saveNote() {
@@ -97,5 +119,5 @@ const AppNotes = (function() {
     render();
   }
 
-  return { init, render, saveNote, edit, cancelEdit, del };
+  return { init, render, saveNote, edit, cancelEdit, del, toggleExpand };
 })();

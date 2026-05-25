@@ -1,7 +1,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { height: 100%; }
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Noto Sans SC', 'PingFang SC', system-ui, sans-serif;
+  font-family: 'Noto Serif SC', -apple-system, BlinkMacSystemFont, 'Inter', 'Noto Sans SC', 'PingFang SC', system-ui, sans-serif;
   background: var(--bg);
   color: var(--text);
   font-size: 14px;
@@ -262,7 +262,7 @@ button { cursor: pointer; }
 .app-header {
   position: sticky; top: 0; z-index: 5;
   background: var(--bg);
-  padding: 28px 32px 16px;
+  padding: calc(24px + env(safe-area-inset-top, 0px)) 32px 16px;
   display: flex; align-items: center; gap: 10px;
   border-bottom: 1px solid var(--line);
 }
@@ -430,7 +430,7 @@ textarea.field { resize: vertical; min-height: 120px; line-height: 1.7; }
   color: var(--text); position: relative; margin-top: 14px;
 }
 .imagery-box::before {
-  content: '意象 · IMAGERY';
+  content: '梦占 · LOVE';
   position: absolute; top: -8px; left: 16px;
   background: var(--bg); padding: 0 10px;
   font-size: 10px; color: var(--muted); letter-spacing: 2px;
@@ -675,3 +675,21 @@ textarea.field { resize: vertical; min-height: 120px; line-height: 1.7; }
 .progress-fill { background: linear-gradient(90deg, var(--hint-blue), var(--hint-violet)); }
 .draw-slot.revealed { border-color: var(--hint-violet); }
 .life-dot { background: var(--hint-violet); }
+.btn-text-toggle {
+  background: none;
+  border: none;
+  color: var(--hint-blue);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 4px 0;
+  margin-top: 6px;
+  display: block;
+  font-weight: 500;
+}
+.draw-slot.revealed.active {
+  border-color: var(--hint-blue) !important;
+  box-shadow: 0 0 8px rgba(184, 208, 232, 0.4);
+}
+.card-modal-body p, .section-cell p {
+  white-space: pre-wrap;
+}
